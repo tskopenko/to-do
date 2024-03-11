@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -7,8 +8,8 @@ from core.models import Task, Tag
 
 class TaskListView(generic.ListView):
     model = Task
-    template_name = 'core/index.html'
     paginate_by = 5
+    ordering = ['is_done', '-datetime']
 
 
 class TaskDetailView(generic.DetailView):
@@ -54,3 +55,23 @@ class TagUpdateView(generic.UpdateView):
 class TagDeleteView(generic.DeleteView):
     model = Tag
     success_url = reverse_lazy("core:tag-list")
+
+
+def mark_is_complete(request: HttpRequest, pk: int) -> HttpResponse:
+    task = get_object_or_404(Task, pk=pk)
+    task.is_done = True
+    task.save()
+    return HttpResponseRedirect(
+        request.META.get("HTTP_REFERER",
+                         reverse_lazy(viewname="core:index"))
+    )
+
+
+def mark_not_complete(request: HttpRequest, pk: int) -> HttpResponse:
+    task = get_object_or_404(Task, pk=pk)
+    task.is_done = False
+    task.save()
+    return HttpResponseRedirect(
+        request.META.get("HTTP_REFERER",
+                         reverse_lazy(viewname="core:index"))
+    )
