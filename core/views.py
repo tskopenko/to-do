@@ -7,6 +7,7 @@ from core.models import Task, Tag
 
 class TaskListView(generic.ListView):
     model = Task
+    template_name = 'core/index.html'
     paginate_by = 5
 
 
