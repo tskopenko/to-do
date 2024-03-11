@@ -4,19 +4,19 @@
   <h1>
     Task list
     <a href="{% url 'core:task-create' %}" class="btn btn-primary link-to-page">
-      Create
+      Create new task
     </a>
   </h1>
   {% if task_list %}
     {% for task in task_list %}
 
-        <h4><a href="{% url 'core:task-detail' pk=task.id %} ">{{ task.content }}
+        <h4><p>{{ task.content }}
           {% if task.is_done %}
           <span style="color:limegreen">{{ task.is_finished }}</span>
           {% else %}
           <span style="color:red">{{ task.is_finished }}</span>
           {% endif %}
-        </a></h4>
+        </p></h4>
         {% if task.is_done %}
           <a href="{% url 'core:undone' pk=task.id %}" class="btn btn-outline-secondary">Undo</a>
         {% else %}
@@ -28,6 +28,13 @@
         {{ tag }},
         {% endfor %}
       <br>
+      <a href="{% url 'core:task-delete' pk=task.id %}" class="btn btn-danger link-to-page">
+        Delete
+      </a>
+
+      <a href="{% url 'core:task-update' pk=task.id %}" class="btn btn-secondary link-to-page">
+        Update
+      </a>
       <hr>
     {% endfor %}
 
