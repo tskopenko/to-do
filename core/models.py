@@ -2,7 +2,12 @@ from django.db import models
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(
+        max_length=255,
+        unique=True,
+        blank=False,
+        null=False
+    )
 
     def __str__(self):
         return self.name
@@ -20,5 +25,9 @@ class Task(models.Model):
         related_name='tasks',
     )
 
+    @property
+    def is_finished(self):
+        return "Done" if self.is_done else "Not Done"
+
     def __str__(self):
-        return f"{self.content} ({self.is_done})"
+        return f"{self.content} ({self.is_finished})"
