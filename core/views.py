@@ -12,10 +12,6 @@ class TaskListView(generic.ListView):
     ordering = ['is_done', '-datetime']
 
 
-class TaskDetailView(generic.DetailView):
-    model = Task
-
-
 class TaskCreateView(generic.CreateView):
     model = Task
     fields = '__all__'

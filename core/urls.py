@@ -16,7 +16,6 @@ from core.views import (
 
 urlpatterns = [
     path("", TaskListView.as_view(), name="task-list"),
-    path("tasks/<int:pk>/", TaskDetailView.as_view(), name="task-detail"),
     path("tasks/create/", TaskCreateView.as_view(), name="task-create"),
     path(
         "tasks/<int:pk>/update/",
