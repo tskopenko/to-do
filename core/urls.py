@@ -2,7 +2,6 @@ from django.urls import path
 
 from core.views import (
     TaskListView,
-    TaskDetailView,
     TaskCreateView,
     TaskUpdateView,
     TaskDeleteView,
